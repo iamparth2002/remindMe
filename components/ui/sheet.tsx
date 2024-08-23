@@ -8,18 +8,21 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const Sheet = SheetPrimitive.Root
-
 const SheetTrigger = SheetPrimitive.Trigger
-
 const SheetClose = SheetPrimitive.Close
 
-const SheetPortal = ({
-  className,
-  ...props
-}: SheetPrimitive.DialogPortalProps) => (
-  <SheetPrimitive.Portal className={cn(className)} {...props} />
+// Wrapper component that accepts `className`
+const SheetWrapper = ({ className, children, ...props }: React.HTMLProps<HTMLDivElement>) => (
+  <div className={cn(className)} {...props}>
+    {children}
+  </div>
 )
-SheetPortal.displayName = SheetPrimitive.Portal.displayName
+SheetWrapper.displayName = "SheetWrapper"
+
+const SheetPortal = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <SheetPrimitive.Portal {...props} />
+)
+SheetPortal.displayName = "SheetPortal"
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,

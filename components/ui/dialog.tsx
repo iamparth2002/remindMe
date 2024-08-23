@@ -7,16 +7,20 @@ import { Cross2Icon } from "@radix-ui/react-icons"
 import { cn } from "@/lib/utils"
 
 const Dialog = DialogPrimitive.Root
-
 const DialogTrigger = DialogPrimitive.Trigger
 
-const DialogPortal = ({
-  className,
-  ...props
-}: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props} />
+// Wrapper component that accepts `className`
+const DialogWrapper = ({ className, children, ...props }: React.HTMLProps<HTMLDivElement>) => (
+  <div className={cn(className)} {...props}>
+    {children}
+  </div>
 )
-DialogPortal.displayName = DialogPrimitive.Portal.displayName
+DialogWrapper.displayName = "DialogWrapper"
+
+const DialogPortal = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <DialogPrimitive.Portal {...props} />
+)
+DialogPortal.displayName = "DialogPortal"
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
